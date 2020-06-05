@@ -29,6 +29,24 @@ second['Open'].plot(label= stock2)
 third['Open'].plot(label= stock3)
 plt.legend()
 
+#fig10 = plt.figure()
+first['MA50'] = first['Open'].rolling(50).mean()
+first['MA175'] = first['Open'].rolling(175).mean()
+first[['Open','MA50','MA175']].plot(label=stock1,figsize=(16,8), title='Moving Avg of ' + stock1)
+plt.legend()
+
+#fig11 = plt.figure()
+second['MA50'] = second['Open'].rolling(50).mean()
+second['MA175'] = second['Open'].rolling(175).mean()
+second[['Open','MA50','MA175']].plot(label=stock2,figsize=(16,8),title='Moving Avg of ' + stock2)
+plt.legend()
+
+#fig12 = plt.figure()
+third['MA50'] = third['Open'].rolling(50).mean()
+third['MA175'] = third['Open'].rolling(175).mean()
+third[['Open','MA50','MA175']].plot(label=stock3,figsize=(16,8),title='Moving Avg of ' + stock3)
+plt.legend()
+
 fig2= plt.figure(figsize=(16,8))
 first['Volume'].plot(label= stock1, title='Volume Traded')
 second['Volume'].plot(label= stock2)
@@ -42,19 +60,21 @@ third['Total Traded'] = third['Open']*third['Volume']
 first['Total Traded'].plot(label= stock1, title='Total Traded')
 second['Total Traded'].plot(label= stock2)
 third['Total Traded'].plot(label= stock3)
+plt.legend()
 
 cardf= pd.concat([first['Open'],second['Open'],third['Open']], axis=1)
 cardf.columns= [stock1+' Open', stock2+' Open', stock3+ ' Open'] 
-scatter_matrix(cardf,figsize=(8,8),)
+scatter_matrix(cardf,figsize=(8,8))
+plt.suptitle('Analyze Correlation b/w Stocks')
+
 first['Returns']= first['Close'].pct_change(1)
 second['Returns']= second['Close'].pct_change(1)
 third['Returns']= third['Close'].pct_change(1)
 
-fig4= plt.figure()
 first['Returns'].hist(bins=100, label=stock1,figsize=(10,8))
 second['Returns'].hist(bins=100, label=stock2,figsize=(10,8))
 third['Returns'].hist(bins=100, label=stock3,figsize=(10,8))
-plt.legend()
+plt.suptitle("View of Volatility")
 
 fig5=plt.figure()
 first['Cumulative Return'] = (1 + first['Returns']).cumprod()
